@@ -28,8 +28,34 @@ class OpenSourcePocketFightingAnimal {
   }
 }
 
+class OpenSourcePocketFightingAnimalRage extends OpenSourcePocketFightingAnimal{
+  constructor(name, moves, maxHitPoints){
+    super(name, moves, maxHitPoints)
+    this.enraged=false
+  }
+  takeDamage(hit) {
+    this.hitPoints -= hit
+    if(this.hitPoints < 10){
+      this.enraged = true
+      console.log(`${this.name} becomes enraged!`)
+    }
+  }
+  useMoveAgainstOpponent(index, opponent) {
+    const move = this.moves[index]
+    console.log(
+      `${this.name} used ${move.name.toUpperCase()} against ${opponent.name}!`
+    )
+    if(this.enraged){
+      opponent.takeDamage(move.hit*1.5)
+    }else{
+      opponent.takeDamage(move.hit)
+    }
+    console.log(opponent.toString())
+  }
+}
+
 // We can extend OpenSourcePocketFightingAnimal with a specific species
-class Thundermouse extends OpenSourcePocketFightingAnimal {
+class Thundermouse extends OpenSourcePocketFightingAnimalRage {
   constructor(moves, maxHitPoints) {
     super('Thundermouse', moves, maxHitPoints)
   }
